@@ -1,58 +1,62 @@
-let ingredienteCebolla = false
-let ingredientePatata = false
-let ingredienteHuevo = false
-let receta = ""
-let tortillaPatatas = "tortilla de patatas"
-let tortillaPatatasSin = "tortilla de patatas sin cebolla"
+class Receta {
+    constructor (nombre, ingrediente, pasos) {
+        this.nombre = nombre; 
+        this.ingrediente = ingrediente;
+        this.pasos = pasos;
+    }
+}  
+
+const ingredientesTortillaPatatas = ["PATATA", "CEBOLLA", "HUEVO"];
+const pasosTortillaPatatas = ["Para hacer Tortilla de Patatas necesitas, patatas, cebolla y huevos.", 
+    "Paso 1: Cortamos y freímos las patatas y la cebolla", 
+    "Paso 2: Mezclamos con los huevos", 
+    "Paso 3:Cuajamos la tortilla", 
+    "Paso 4: Damos la vuelta a la tortilla de patatas", 
+    "¡Listo para disfrutar!"]
+const tortillaPatatas = new Receta ("Tortilla de Patatas", ingredientesTortillaPatatas, pasosTortillaPatatas)
+
+const ingredientesTortillaSin = ["PATATA", "HUEVO"];
+const pasosTortillaSin = ["Para hacer Tortilla de Patatas necesitas, patatas y huevos.", 
+    "Paso 1: Cortamos y freímos las patatas", 
+    "Paso 2: Mezclamos con los huevos", 
+    "Paso 3:Cuajamos la tortilla", 
+    "Paso 4: Damos la vuelta a la tortilla de patatas", 
+    "¡Listo para disfrutar!"]
+const tortillaSin = new Receta ("Tortilla de Patatas sin cebolla", ingredientesTortillaSin, pasosTortillaSin)
+
+const listaRecetas = [
+    tortillaPatatas,
+    tortillaSin
+]
 
 alert("¡Bienvenido a ¿qué tienes en la nevera?, te ayudaremos a encontrar recetas!")
 
-let cantidadIngredientes = parseInt(prompt("¿Cuántos ingredientes vas a utilizar?"))
+let ingredienteTiene = prompt("¿Qué ingredientes tienes en la nevera?").toUpperCase();
 
-for (let i=1; i<(cantidadIngredientes+1); i++){
-    let ingrediente = prompt("¿Cuál es el ingrediente número " + i + " ?")
-    if ((ingrediente == "cebolla") || (ingrediente == "cebollas") || (ingrediente == "Cebolla") || (ingrediente == "Cebollas") || (ingrediente == "CEBOLLA") || (ingrediente == "CEBOLLAS")){
-        ingredienteCebolla = true
-    }
-    else if ((ingrediente == "patata") || (ingrediente == "patatas") || (ingrediente == "Patata") || (ingrediente == "Patatas") || (ingrediente == "PATATA") || (ingrediente == "PATATAS")){
-        ingredientePatata = true
-    }
-    else if ((ingrediente == "huevo") || (ingrediente == "huevos") || (ingrediente == "Huevo") || (ingrediente == "Huevos") || (ingrediente == "HUEVO") || (ingrediente == "HUEVOS")){
-        ingredienteHuevo = true
-    }
-}
+const resultadoRecetas = listaRecetas.filter((el) => el.ingrediente.includes(ingredienteTiene) === true)
 
-if (((ingredienteCebolla == true) && (ingredientePatata == true) && (ingredienteHuevo == true))) {
-    receta = tortillaPatatas
-    alert("Tienes los ingredientes perfectos para cocinar... ¡Tortilla de patatas!")
-    let cantidadComensales = parseFloat(prompt("¿Cuántos vais a comer?"))
-    if ((cantidadComensales != 0) && (receta == tortillaPatatas)){
-        let resultadoTortillaPatatas = (cantidadComensales*2);
-        let resultadoTortillaCebolla = (cantidadComensales*1);
-        let resultadoTortillaHuevos = (cantidadComensales*3);
-        alert("Para hacer " + receta + " necesitas " + resultadoTortillaPatatas + " patatas, " + resultadoTortillaCebolla + " cebollas y " + resultadoTortillaHuevos + " huevos." );
-        alert("Paso 1: Cortamos y freímos las patatas y la cebolla")
-        alert("Paso 2: Mezclamos con los huevos")
-        alert("Paso 3:Cuajamos la tortilla")
-        alert("Paso 4: Damos la vuelta a la tortilla de patatas")
-        alert("¡Listo para disfrutar!")
-    }
-}
-else if ((ingredientePatata == true) && (ingredienteHuevo == true)) {
-    receta = tortillaPatatasSin
-    alert("Tienes los ingredientes perfectos para cocinar... ¡Tortilla de patatas!")
-    let cantidadComensales = parseFloat(prompt("¿Cuántos vais a comer?"))
-    if ((cantidadComensales != 0) && (receta == tortillaPatatasSin)){
-        let resultadoTortillaPatatas = (cantidadComensales*2);
-        let resultadoTortillaHuevos = (cantidadComensales*3);
-        alert("Para hacer " + receta + " necesitas " + resultadoTortillaPatatas + " patatas y " + resultadoTortillaHuevos + " huevos." )
-        alert("Paso 1: Cortamos y freímos las patatas")
-        alert("Paso 2: Mezclamos con los huevos")
-        alert("Paso 3:Cuajamos la tortilla")
-        alert("Paso 4: Damos la vuelta a la tortilla de patatas")
-        alert("¡Listo para disfrutar!")
-    }
-}
-else{
+if (resultadoRecetas.length == 0){
     alert("¡Lo sentimos! No hemos encontrado recetas con esos ingredientes.")
+} 
+else{
+    let textoRecetas = ""
+    for (let i=0; i<resultadoRecetas.length; i++){
+        textoRecetas = textoRecetas + resultadoRecetas[i].nombre + "\n"
+    }
+
+    let ver = prompt("Tienes para cocinar:" + "\n" + textoRecetas + " ¿Qué receta quieres ver?").toUpperCase()
+
+    if ((ver == "TORTILLA DE PATATAS")) {
+        for (let i=0; i<pasosTortillaPatatas.length; i++){
+            alert(pasosTortillaPatatas[i])
+        }
+    }
+    else if((ver == "TORTILLA DE PATATAS SIN CEBOLLA")) {
+        for (let i=0; i<pasosTortillaSin.length; i++){
+            alert(pasosTortillaSin[i])
+        }
+    }
+    else {
+        alert("No tenemos información de esa receta...")
+    }
 }
